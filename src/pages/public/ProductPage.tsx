@@ -48,8 +48,8 @@ export default function ProductPage() {
     window.scrollTo(0, 0);
   }, [slug]);
 
-  const handleAddToCart = () => {
-    if (product) addItem(product.id);
+  const handleAddToCart = (quantity: number = 1) => {
+    if (product) addItem(product.id, quantity);
   };
 
   return (

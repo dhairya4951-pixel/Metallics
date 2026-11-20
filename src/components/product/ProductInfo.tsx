@@ -2,19 +2,21 @@ import { useState } from 'react';
 import { ShoppingBag, Check } from 'lucide-react';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
+import QuantityControl from '../cart/QuantityControl';
 import { formatPrice } from '../../lib/utils';
 import type { Product } from '../../types/database';
 
 interface ProductInfoProps {
   product: Product;
-  onAddToCart: () => void;
+  onAddToCart: (quantity: number) => void;
 }
 
 export default function ProductInfo({ product, onAddToCart }: ProductInfoProps) {
+  const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
 
   const handleAdd = () => {
-    onAddToCart();
+    onAddToCart(quantity);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };
@@ -50,8 +52,22 @@ export default function ProductInfo({ product, onAddToCart }: ProductInfoProps) 
         </div>
       )}
 
-      {/* Add to Cart */}
-      <div className="border-t border-border-light pt-6">
+      {/* Quantity & Add to Cart */}
+      <div className="border-t border-border-light pt-6 space-y-4">
+        {product.is_available && (
+          <div className="space-y-1.5">
+            <label className="text-xs uppercase tracking-wider text-text-muted font-medium">
+              Quantity
+            </label>
+            <QuantityControl
+              quantity={quantity}
+              onChange={setQuantity}
+              min={1}
+              max={99}
+            />
+          </div>
+        )}
+
         <Button
           onClick={handleAdd}
           disabled={!product.is_available}
@@ -62,7 +78,7 @@ export default function ProductInfo({ product, onAddToCart }: ProductInfoProps) 
           {added ? (
             <>
               <Check size={18} />
-              Added to Cart
+              Added {quantity > 1 ? `(${quantity})` : ''} to Cart
             </>
           ) : (
             <>
