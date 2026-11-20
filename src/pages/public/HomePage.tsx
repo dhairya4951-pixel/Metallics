@@ -46,15 +46,19 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-32">
           <div className="max-w-2xl mx-auto text-center space-y-6">
             <p className="text-xs uppercase tracking-[0.3em] text-text-muted">
-              Premium Collection
+              The Jewellery collective
             </p>
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-text leading-tight">
               {brandTagline}
             </h1>
-            <p className="text-sm md:text-base text-text-muted leading-relaxed max-w-lg mx-auto">
-              Discover our curated collection of handcrafted jewellery, designed to celebrate the
-              unique beauty in every person.
-            </p>
+            <div className="space-y-2 text-sm md:text-base text-text-muted leading-relaxed max-w-lg mx-auto">
+              <p>
+                Discover our curated world of jewellery, bringing together different styles, designs and expressions.
+              </p>
+              <p className="font-serif italic text-text">
+                Something for every you.
+              </p>
+            </div>
             <div className="pt-4">
               <Link to="/catalog">
                 <Button size="lg">
