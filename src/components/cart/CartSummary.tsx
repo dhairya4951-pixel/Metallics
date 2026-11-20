@@ -13,6 +13,8 @@ interface CartSummaryProps {
 export default function CartSummary({ items, onDmToOrder, onClearCart, loading = false }: CartSummaryProps) {
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const shipping = totalItems > 0 ? 50 : 0;
+  const total = subtotal + shipping;
   const hasUnavailable = items.some((item) => !item.isAvailable);
   const availableItems = items.filter(item => item.isAvailable);
 
@@ -22,12 +24,12 @@ export default function CartSummary({ items, onDmToOrder, onClearCart, loading =
 
       <div className="space-y-3 text-sm">
         <div className="flex justify-between text-text-muted">
-          <span>Items</span>
-          <span>{totalItems}</span>
+          <span>Items ({totalItems})</span>
+          <span>{formatPrice(subtotal)}</span>
         </div>
         <div className="flex justify-between text-text-muted">
           <span>Shipping</span>
-          <span className="text-text font-medium">₹50</span>
+          <span className="text-text font-medium">{shipping > 0 ? `₹${shipping}` : '—'}</span>
         </div>
         {hasUnavailable && (
           <div className="flex justify-between text-text-muted">
@@ -36,8 +38,8 @@ export default function CartSummary({ items, onDmToOrder, onClearCart, loading =
           </div>
         )}
         <div className="flex justify-between text-text font-medium border-t border-border-light pt-3">
-          <span>Subtotal</span>
-          <span>{formatPrice(subtotal)}</span>
+          <span className="font-serif text-base text-text">Total</span>
+          <span className="font-serif text-base text-burgundy font-semibold">{formatPrice(total)}</span>
         </div>
         <p className="text-[11px] text-text-muted italic">
           * Flat ₹50 standard shipping applies across India

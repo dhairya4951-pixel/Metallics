@@ -154,6 +154,7 @@ export default function CartPage() {
 
       // 4. Generate order summary text using backend-returned prices
       const baseUrl = window.location.origin;
+      const orderTotal = data.subtotal + 50;
       const summaryText = generateOrderSummaryText({
         orderCode: data.order_code,
         items: data.items.map(item => ({
@@ -165,6 +166,7 @@ export default function CartPage() {
         })),
         totalItems: data.total_items,
         subtotal: formatPrice(data.subtotal, data.currency_code),
+        total: formatPrice(orderTotal, data.currency_code),
         publicOrderUrl: `${baseUrl}/order/${data.public_token}`,
       });
 

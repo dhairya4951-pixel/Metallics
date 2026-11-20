@@ -9,6 +9,7 @@ interface OrderSummaryTextProps {
   }[];
   totalItems: number;
   subtotal: string;
+  total?: string;
   publicOrderUrl: string;
 }
 
@@ -17,6 +18,7 @@ export function generateOrderSummaryText({
   items,
   totalItems,
   subtotal,
+  total,
   publicOrderUrl,
 }: OrderSummaryTextProps): string {
   const productLines = items
@@ -37,6 +39,7 @@ ${productLines}
 Total Items: ${totalItems}
 Product Subtotal: ${subtotal}
 Shipping: ₹50 (Standard Delivery)
+Total Amount: ${total || subtotal}
 
 View My Complete Order:
 ${publicOrderUrl}`;
