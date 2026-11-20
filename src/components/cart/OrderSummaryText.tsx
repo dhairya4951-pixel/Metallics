@@ -36,6 +36,7 @@ ${productLines}
 
 Total Items: ${totalItems}
 Product Subtotal: ${subtotal}
+Shipping: ₹50 (Standard Delivery)
 
 View My Complete Order:
 ${publicOrderUrl}`;

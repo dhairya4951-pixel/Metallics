@@ -25,6 +25,10 @@ export default function CartSummary({ items, onDmToOrder, onClearCart, loading =
           <span>Items</span>
           <span>{totalItems}</span>
         </div>
+        <div className="flex justify-between text-text-muted">
+          <span>Shipping</span>
+          <span className="text-text font-medium">₹50</span>
+        </div>
         {hasUnavailable && (
           <div className="flex justify-between text-text-muted">
             <span>Available</span>
@@ -35,6 +39,9 @@ export default function CartSummary({ items, onDmToOrder, onClearCart, loading =
           <span>Subtotal</span>
           <span>{formatPrice(subtotal)}</span>
         </div>
+        <p className="text-[11px] text-text-muted italic">
+          * Flat ₹50 standard shipping applies across India
+        </p>
       </div>
 
       {hasUnavailable && (
