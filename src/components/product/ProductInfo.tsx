@@ -15,6 +15,10 @@ export default function ProductInfo({ product, onAddToCart }: ProductInfoProps) 
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
 
+  const isOutOfStock = product.stock_quantity !== undefined && product.stock_quantity === 0;
+  const isAvailable = product.is_available && !isOutOfStock;
+  const maxPurchaseQty = product.stock_quantity !== undefined ? Math.max(1, Math.min(product.stock_quantity, 99)) : 99;
+
   const handleAdd = () => {
     onAddToCart(quantity);
     setAdded(true);
@@ -38,10 +42,14 @@ export default function ProductInfo({ product, onAddToCart }: ProductInfoProps) 
         {formatPrice(product.price)}
       </p>
 
-      {/* Availability */}
-      {!product.is_available && (
+      {/* Availability / Stock Status */}
+      {isOutOfStock ? (
+        <Badge variant="error">Out of Stock</Badge>
+      ) : !product.is_available ? (
         <Badge variant="warning">Currently Unavailable</Badge>
-      )}
+      ) : product.stock_quantity !== undefined && product.stock_quantity <= 5 ? (
+        <Badge variant="warning">Only {product.stock_quantity} left in stock</Badge>
+      ) : null}
 
       {/* Description */}
       {product.description && (
@@ -54,7 +62,7 @@ export default function ProductInfo({ product, onAddToCart }: ProductInfoProps) 
 
       {/* Quantity & Add to Cart */}
       <div className="border-t border-border-light pt-6 space-y-4">
-        {product.is_available && (
+        {isAvailable && (
           <div className="space-y-1.5">
             <label className="text-xs uppercase tracking-wider text-text-muted font-medium">
               Quantity
@@ -63,14 +71,14 @@ export default function ProductInfo({ product, onAddToCart }: ProductInfoProps) 
               quantity={quantity}
               onChange={setQuantity}
               min={1}
-              max={99}
+              max={maxPurchaseQty}
             />
           </div>
         )}
 
         <Button
           onClick={handleAdd}
-          disabled={!product.is_available}
+          disabled={!isAvailable}
           size="lg"
           className="w-full sm:w-auto"
           variant={added ? 'secondary' : 'primary'}
@@ -83,7 +91,7 @@ export default function ProductInfo({ product, onAddToCart }: ProductInfoProps) 
           ) : (
             <>
               <ShoppingBag size={18} />
-              {product.is_available ? 'Add to Cart' : 'Unavailable'}
+              {isOutOfStock ? 'Out of Stock' : product.is_available ? 'Add to Cart' : 'Unavailable'}
             </>
           )}
         </Button>

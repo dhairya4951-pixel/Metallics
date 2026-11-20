@@ -21,6 +21,7 @@ interface ProductFormData {
   is_available: boolean;
   is_featured: boolean;
   sort_order: string;
+  stock_quantity: string;
 }
 
 const INITIAL_FORM: ProductFormData = {
@@ -33,6 +34,7 @@ const INITIAL_FORM: ProductFormData = {
   is_available: true,
   is_featured: false,
   sort_order: '0',
+  stock_quantity: '1',
 };
 
 export default function ProductFormPage() {
@@ -82,6 +84,7 @@ export default function ProductFormPage() {
       is_available: data.is_available,
       is_featured: data.is_featured,
       sort_order: String(data.sort_order),
+      stock_quantity: String(data.stock_quantity ?? 1),
     });
     setImages((data.images as ProductImage[]) || []);
     setLoading(false);
@@ -151,6 +154,7 @@ export default function ProductFormPage() {
       is_available: form.is_available,
       is_featured: form.is_featured,
       sort_order: parseInt(form.sort_order) || 0,
+      stock_quantity: parseInt(form.stock_quantity) >= 0 ? parseInt(form.stock_quantity) : 1,
     };
 
     if (isEditing && id) {
@@ -233,17 +237,30 @@ export default function ProductFormPage() {
           placeholder="Select a category"
         />
 
-        <Input
-          label="Price"
-          type="number"
-          placeholder="0.00"
-          min="0"
-          step="0.01"
-          value={form.price}
-          onChange={(e) => handleChange('price', e.target.value)}
-          error={errors.price}
-          required
-        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Input
+            label="Price"
+            type="number"
+            placeholder="0.00"
+            min="0"
+            step="0.01"
+            value={form.price}
+            onChange={(e) => handleChange('price', e.target.value)}
+            error={errors.price}
+            required
+          />
+
+          <Input
+            label="Stock Quantity"
+            type="number"
+            placeholder="1"
+            min="0"
+            value={form.stock_quantity}
+            onChange={(e) => handleChange('stock_quantity', e.target.value)}
+            error={errors.stock_quantity}
+            required
+          />
+        </div>
 
         <div className="flex flex-col gap-1.5">
           <label htmlFor="description" className="text-sm font-medium text-text">

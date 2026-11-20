@@ -207,9 +207,16 @@ export default function ProductsPage() {
                       {product.sku || '—'}
                     </td>
                     <td className="px-4 py-3">
-                      <Badge variant={product.is_available ? 'success' : 'default'}>
-                        {product.is_available ? 'Available' : 'Archived'}
-                      </Badge>
+                      <div className="flex flex-col gap-1 items-start">
+                        <Badge variant={product.is_available ? 'success' : 'default'}>
+                          {product.is_available ? 'Available' : 'Archived'}
+                        </Badge>
+                        {product.stock_quantity !== undefined && (
+                          <span className={`text-[11px] ${product.stock_quantity === 0 ? 'text-error font-medium' : 'text-text-muted'}`}>
+                            {product.stock_quantity === 0 ? 'Out of stock' : `${product.stock_quantity} in stock`}
+                          </span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-4 py-3 text-right">
                       <div className="flex items-center justify-end gap-2">
