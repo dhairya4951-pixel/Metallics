@@ -24,8 +24,8 @@ export default function CartSummary({ items, onDmToOrder, onClearCart, loading =
 
       <div className="space-y-3 text-sm">
         <div className="flex justify-between text-text-muted">
-          <span>Items ({totalItems})</span>
-          <span>{formatPrice(subtotal)}</span>
+          <span>Items</span>
+          <span>{totalItems}</span>
         </div>
         <div className="flex justify-between text-text-muted">
           <span>Shipping</span>
@@ -38,8 +38,8 @@ export default function CartSummary({ items, onDmToOrder, onClearCart, loading =
           </div>
         )}
         <div className="flex justify-between text-text font-medium border-t border-border-light pt-3">
-          <span className="font-serif text-base text-text">Total</span>
-          <span className="font-serif text-base text-burgundy font-semibold">{formatPrice(total)}</span>
+          <span>Subtotal</span>
+          <span>{formatPrice(total)}</span>
         </div>
         <p className="text-[11px] text-text-muted italic">
           * Flat ₹50 standard shipping applies across India
